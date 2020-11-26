@@ -6,15 +6,23 @@
 //
 
 import UIKit
+import Photos
 
 class AlbumsViewController: UIViewController {
     // MARK: - MVVM
     
     var albumsViewModel: AlbumsViewModelProtocol?
+    var albumPhotosViewModel: AlbumPhotosViewModelProtocol?
     
     // MARK: - Properties - UI
     
     @IBOutlet private weak var _tableView: UITableView!
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let moveToAlbumPhotosSegueID = "MoveToAlbumPhotos"
+    }
     
     // MARK: - Properties - private
     
@@ -37,8 +45,28 @@ class AlbumsViewController: UIViewController {
 extension AlbumsViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        _initializeSettings()
-        _initializeUi()
+        configure()
+    }
+}
+
+// MARK: - Navigation
+
+extension AlbumsViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.moveToAlbumPhotosSegueID,
+            let albumDetail = segue.destination as? AlbumsViewProtocol & AlbumPhotosViewProtocol,
+            let album = sender as? Albums.Album {
+            // mvvm - for album
+            albumDetail.albumsViewModel = albumsViewModel
+            self.albumsViewModel?.albumPhotosView = albumDetail
+            
+            // mvvm - for album photo list
+            let viewModel = AlbumPhotosViewModel()
+            viewModel.albumsView = self
+            viewModel.albumPhotosView = albumDetail
+            viewModel.album = album
+            albumDetail.albumPhotosViewModel = viewModel
+        }
     }
 }
 
@@ -49,22 +77,51 @@ extension AlbumsViewController {
         guard let albumsViewModel = albumsViewModel else {
             return
         }
+        _bindDatas()
+        albumsViewModel.configure()
+    }
+    
+    private func _initializeUi() {
+        title = NSLocalizedString("Albums", comment: "")
+    }
+    
+    private func _bindDatas() {
+        guard let albumsViewModel = albumsViewModel else {
+            return
+        }
         albumsViewModel.userAlbumList.bind { [weak self] list in
             guard let self = self, let list = list else { return }
             Log.l(l: .i)
             self._list = list
             self._tableView.reloadData()
         }
-        albumsViewModel.configure()
-    }
-    
-    private func _initializeUi() {
     }
 }
 
 // MARK: - AlbumsViewProtocol
 
 extension AlbumsViewController: AlbumsViewProtocol {
+    func configure() {
+        _initializeSettings()
+        _initializeUi()
+    }
+    
+    func showNoAccessAlert() {
+        let title = NSLocalizedString("No Photo Access", comment: "")
+        let message = NSLocalizedString("Please grant SVGOverlay photo access in Settings -> Privacy", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:])
+            }
+        })
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: - AlbumPhotosViewProtocol
+
+extension AlbumsViewController: AlbumPhotosViewProtocol {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -95,5 +152,7 @@ extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let item = _list[indexPath.row]
+        performSegue(withIdentifier: Constants.moveToAlbumPhotosSegueID, sender: item)
     }
 }

@@ -12,7 +12,7 @@ class AlbumsViewModel: NSObject {
     // MARK: - AlbumsViewModelProtocol
     
     weak var albumsView: AlbumsViewProtocol?
-    weak var albumsPhotosView: AlbumsViewProtocol?
+    weak var albumPhotosView: AlbumsViewProtocol?
     
     // MARK: - Propeties - public
     
@@ -33,14 +33,21 @@ class AlbumsViewModel: NSObject {
         return opt
     }()
     
+    private let _fetchOptions: PHFetchOptions = {
+        let opt = PHFetchOptions()
+        opt.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        return opt
+    }()
+    
     // MARK: - life cycle
     
-    init(defaultUuid: String? = nil) {
+    override init() {
         Log.l(l: .i)
     }
     
     deinit {
         Log.l(l: .i)
+        _unConfigure()
     }
 }
 
@@ -49,7 +56,7 @@ class AlbumsViewModel: NSObject {
 extension AlbumsViewModel {
     private func _requestPhotosAuthorization() {
         PHPhotoLibrary.requestAuthorization { status in
-            DispatchQueue.main.async { [weak self] in
+            OperationQueue.main.addOperation { [weak self] in
                 guard let self = self else { return }
                 switch status {
                 case .authorized:
@@ -82,19 +89,18 @@ extension AlbumsViewModel {
     private func _configureAlbumList() {
         var userAlbumList: [Albums.Album] = []
         
-        _configureAllPhotosAlbum(&userAlbumList)
-        _configureUserAlbums(&userAlbumList)
-        _configureSmartAlbums(&userAlbumList)
+        _configureAddAllPhotosAlbum(&userAlbumList)
+        _configureAddUserAlbums(&userAlbumList)
+        _configureAddSmartAlbums(&userAlbumList)
         
         self.userAlbumList.value = userAlbumList
     }
     
-    private func _configureAllPhotosAlbum(_ container: inout [Albums.Album]) {
-        let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-        let assetsFetchResults = PHAsset.fetchAssets(with: options)
+    private func _configureAddAllPhotosAlbum(_ container: inout [Albums.Album]) {
+        let assetsFetchResults = PHAsset.fetchAssets(with: _fetchOptions)
         if let firstPhoto = assetsFetchResults.firstObject {
-            let uiAlbum = Albums.Album(title: NSLocalizedString("All Photos", comment: ""))
+            var uiAlbum = Albums.Album(title: NSLocalizedString("All Photos", comment: ""))
+            uiAlbum.asset = nil
             container.append(uiAlbum)
             _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
                 uiAlbum.thumbnail.value = image
@@ -102,7 +108,7 @@ extension AlbumsViewModel {
         }
     }
     
-    private func _configureUserAlbums(_ container: inout [Albums.Album]) {
+    private func _configureAddUserAlbums(_ container: inout [Albums.Album]) {
         guard let userAlbums = _userAlbums, userAlbums.isEmpty == false else {
             return
         }
@@ -111,12 +117,10 @@ extension AlbumsViewModel {
             guard let title = album.localizedTitle else {
                 continue
             }
-            
-            let options = PHFetchOptions()
-            options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-            let assetsFetchResults = PHAsset.fetchAssets(in: album, options: options)
+            let assetsFetchResults = PHAsset.fetchAssets(in: album, options: _fetchOptions)
             if let firstPhoto = assetsFetchResults.firstObject {
-                let uiAlbum = Albums.Album(title: title)
+                var uiAlbum = Albums.Album(title: title)
+                uiAlbum.asset = album
                 container.append(uiAlbum)
                 _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
                     uiAlbum.thumbnail.value = image
@@ -125,7 +129,7 @@ extension AlbumsViewModel {
         }
     }
     
-    private func _configureSmartAlbums(_ container: inout [Albums.Album]) {
+    private func _configureAddSmartAlbums(_ container: inout [Albums.Album]) {
         guard let smartAlbums = _smartAlbums, smartAlbums.isEmpty == false else {
             return
         }
@@ -134,18 +138,20 @@ extension AlbumsViewModel {
             guard let title = album.localizedTitle else {
                 continue
             }
-            
-            let options = PHFetchOptions()
-            options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-            let assetsFetchResults = PHAsset.fetchAssets(in: album, options: options)
+            let assetsFetchResults = PHAsset.fetchAssets(in: album, options: _fetchOptions)
             if let firstPhoto = assetsFetchResults.firstObject {
-                let uiAlbum = Albums.Album(title: title)
+                var uiAlbum = Albums.Album(title: title)
+                uiAlbum.asset = album
                 container.append(uiAlbum)
                 _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
                     uiAlbum.thumbnail.value = image
                 }
             }
         }
+    }
+    
+    private func _unConfigure() {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
 }
 
@@ -161,7 +167,9 @@ extension AlbumsViewModel: AlbumsViewModelProtocol {
 
 extension AlbumsViewModel: PHPhotoLibraryChangeObserver {
     func photoLibraryDidChange(_ changeInstance: PHChange) {
-        DispatchQueue.main.async { [weak self] in
+        Log.l(l: .i)
+        // NOTE: 리스트 동적 변경 테스트는 스크린샷을 찍으면 됨, 사진을 찍으면 앱이 강제 종료 됨
+        OperationQueue.main.addOperation { [weak self] in
             guard let self = self else { return }
             if let userAlbums = self._userAlbums, let changes = changeInstance.changeDetails(for: userAlbums) {
                 self._userAlbums = changes.fetchResultAfterChanges

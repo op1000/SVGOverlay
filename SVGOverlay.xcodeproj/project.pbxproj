@@ -15,6 +15,12 @@
 		0B12B622256F40B100AEE9C7 /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B621256F40B100AEE9C7 /* AlbumTableViewCell.swift */; };
 		0B12B627256F466D00AEE9C7 /* TableView+Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B626256F466D00AEE9C7 /* TableView+Cell.swift */; };
 		0B12B62B256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B62A256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift */; };
+		0B12B62F256F561300AEE9C7 /* AlbumPhotosDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B62E256F561300AEE9C7 /* AlbumPhotosDataStructures.swift */; };
+		0B12B633256F56A500AEE9C7 /* AlbumPhotosProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B632256F56A500AEE9C7 /* AlbumPhotosProtocols.swift */; };
+		0B12B636256F56AC00AEE9C7 /* AlbumPhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B635256F56AC00AEE9C7 /* AlbumPhotosViewModel.swift */; };
+		0B12B639256F56B700AEE9C7 /* AlbumPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B638256F56B700AEE9C7 /* AlbumPhotosViewController.swift */; };
+		0B12B63C256F570100AEE9C7 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B63B256F570100AEE9C7 /* PhotoCollectionViewCell.swift */; };
+		0B12B63F256F5B5400AEE9C7 /* CollectionView+Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B63E256F5B5400AEE9C7 /* CollectionView+Cell.swift */; };
 		0B38E256256E0E1600ED8AB2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */; };
 		0BF728C3256DF9E7001CDD78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF728C2256DF9E7001CDD78 /* AppDelegate.swift */; };
 		0BF728C5256DF9E7001CDD78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF728C4256DF9E7001CDD78 /* SceneDelegate.swift */; };
@@ -34,6 +40,12 @@
 		0B12B621256F40B100AEE9C7 /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		0B12B626256F466D00AEE9C7 /* TableView+Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableView+Cell.swift"; sourceTree = "<group>"; };
 		0B12B62A256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHFetchResult+Convenient.swift"; sourceTree = "<group>"; };
+		0B12B62E256F561300AEE9C7 /* AlbumPhotosDataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPhotosDataStructures.swift; sourceTree = "<group>"; };
+		0B12B632256F56A500AEE9C7 /* AlbumPhotosProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPhotosProtocols.swift; sourceTree = "<group>"; };
+		0B12B635256F56AC00AEE9C7 /* AlbumPhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPhotosViewModel.swift; sourceTree = "<group>"; };
+		0B12B638256F56B700AEE9C7 /* AlbumPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPhotosViewController.swift; sourceTree = "<group>"; };
+		0B12B63B256F570100AEE9C7 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		0B12B63E256F5B5400AEE9C7 /* CollectionView+Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+Cell.swift"; sourceTree = "<group>"; };
 		0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		0B38E25A256E12D900ED8AB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = SVGOverlay/Info.plist; sourceTree = SOURCE_ROOT; };
 		0BF728BF256DF9E7001CDD78 /* SVGOverlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SVGOverlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,9 +86,22 @@
 			isa = PBXGroup;
 			children = (
 				0B12B626256F466D00AEE9C7 /* TableView+Cell.swift */,
+				0B12B63E256F5B5400AEE9C7 /* CollectionView+Cell.swift */,
 				0B12B62A256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0B12B62D256F53B800AEE9C7 /* AlbumPhotos */ = {
+			isa = PBXGroup;
+			children = (
+				0B12B62E256F561300AEE9C7 /* AlbumPhotosDataStructures.swift */,
+				0B12B632256F56A500AEE9C7 /* AlbumPhotosProtocols.swift */,
+				0B12B635256F56AC00AEE9C7 /* AlbumPhotosViewModel.swift */,
+				0B12B638256F56B700AEE9C7 /* AlbumPhotosViewController.swift */,
+				0B12B63B256F570100AEE9C7 /* PhotoCollectionViewCell.swift */,
+			);
+			path = AlbumPhotos;
 			sourceTree = "<group>";
 		};
 		0B38E254256E0DF700ED8AB2 /* Supporting Files */ = {
@@ -139,6 +164,7 @@
 		0BF728C1256DF9E7001CDD78 /* SVGOverlay */ = {
 			isa = PBXGroup;
 			children = (
+				0B12B62D256F53B800AEE9C7 /* AlbumPhotos */,
 				0B38E261256E132700ED8AB2 /* Albums */,
 				0B38E25F256E131400ED8AB2 /* Storyboards */,
 				0B12B619256E7B2700AEE9C7 /* Foundation */,
@@ -285,10 +311,16 @@
 				0BF728C7256DF9E7001CDD78 /* AlbumsViewController.swift in Sources */,
 				0B12B61B256E7B5400AEE9C7 /* Log.swift in Sources */,
 				0B12B610256E6E5F00AEE9C7 /* AlbumsDataStructures.swift in Sources */,
+				0B12B63F256F5B5400AEE9C7 /* CollectionView+Cell.swift in Sources */,
 				0B12B61F256E9B3500AEE9C7 /* Binder.swift in Sources */,
 				0B12B617256E793400AEE9C7 /* AlbumsViewModel.swift in Sources */,
 				0B12B62B256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift in Sources */,
+				0B12B62F256F561300AEE9C7 /* AlbumPhotosDataStructures.swift in Sources */,
+				0B12B639256F56B700AEE9C7 /* AlbumPhotosViewController.swift in Sources */,
+				0B12B636256F56AC00AEE9C7 /* AlbumPhotosViewModel.swift in Sources */,
+				0B12B63C256F570100AEE9C7 /* PhotoCollectionViewCell.swift in Sources */,
 				0B12B627256F466D00AEE9C7 /* TableView+Cell.swift in Sources */,
+				0B12B633256F56A500AEE9C7 /* AlbumPhotosProtocols.swift in Sources */,
 				0B12B622256F40B100AEE9C7 /* AlbumTableViewCell.swift in Sources */,
 				0BF728C3256DF9E7001CDD78 /* AppDelegate.swift in Sources */,
 				0BF728C5256DF9E7001CDD78 /* SceneDelegate.swift in Sources */,

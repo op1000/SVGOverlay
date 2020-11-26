@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import Photos
 
 protocol AlbumsViewModelProtocol: class {
     /// views
     var albumsView: AlbumsViewProtocol? { get set }
-    var albumsPhotosView: AlbumsViewProtocol? { get set }
+    var albumPhotosView: AlbumsViewProtocol? { get set }
     
     /// binder
     var userAlbumList: Binder<[Albums.Album]?> { get set }

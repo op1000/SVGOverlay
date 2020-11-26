@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Photos
 
 // swiftlint:disable convenience_type
 
 struct Albums {
     struct Album {
         let title: String
+        var asset: PHAssetCollection?
         var thumbnail: Binder<UIImage?> = Binder(nil)
         
         init(title: String) {
