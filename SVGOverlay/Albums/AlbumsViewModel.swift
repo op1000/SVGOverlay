@@ -12,7 +12,6 @@ class AlbumsViewModel: NSObject {
     // MARK: - AlbumsViewModelProtocol
     
     weak var albumsView: AlbumsViewProtocol?
-    weak var albumPhotosView: AlbumsViewProtocol?
     
     // MARK: - Propeties - public
     
@@ -22,9 +21,10 @@ class AlbumsViewModel: NSObject {
     
     private var _userAlbums: PHFetchResult<PHAssetCollection>?
     private var _smartAlbums: PHFetchResult<PHAssetCollection>?
-    private let _imageManager = PHCachingImageManager()
     
     // MARK: - Properties - factory
+    
+    private let _imageManager = PHCachingImageManager()
     
     private let _requestOptions: PHImageRequestOptions = {
         let opt = PHImageRequestOptions()

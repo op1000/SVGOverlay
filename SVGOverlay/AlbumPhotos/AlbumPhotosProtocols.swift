@@ -10,7 +10,6 @@ import Photos
 
 protocol AlbumPhotosViewModelProtocol: class {
     /// views
-    var albumsView: AlbumPhotosViewProtocol? { get set }
     var albumPhotosView: AlbumPhotosViewProtocol? { get set }
     
     /// binder

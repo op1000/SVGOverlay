@@ -10,7 +10,7 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
     // MARK: - MVVM
     
-    var albumPhotosViewModel: AlbumPhotosViewModelProtocol?
+    weak var albumPhotosViewModel: AlbumPhotosViewModelProtocol?
     var cellData: Album.Photo?
     
     // MARK: - Properties - UI

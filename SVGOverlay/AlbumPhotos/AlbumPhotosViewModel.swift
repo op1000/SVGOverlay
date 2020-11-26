@@ -11,7 +11,6 @@ import Photos
 class AlbumPhotosViewModel: NSObject {
     // MARK: - AlbumPhotosViewModelProtocol
     
-    weak var albumsView: AlbumPhotosViewProtocol?
     weak var albumPhotosView: AlbumPhotosViewProtocol?
     
     // MARK: - Propeties - public
@@ -19,11 +18,9 @@ class AlbumPhotosViewModel: NSObject {
     var album: Albums.Album?
     var photoList: Binder<[Album.Photo]?> = Binder(nil)
     
-    // MARK: - Propeties - private
+    // MARK: - Propeties - factory
     
     private let _imageManager = PHCachingImageManager()
-    
-    // MARK: - Properties - factory
     
     private let _requestOptions: PHImageRequestOptions = {
         let opt = PHImageRequestOptions()

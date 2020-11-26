@@ -12,13 +12,18 @@ class AlbumPhotosViewController: UIViewController {
     // MARK: - MVVM
     
     var albumPhotosViewModel: AlbumPhotosViewModelProtocol?
-    var albumsViewModel: AlbumsViewModelProtocol?
     
     // MARK: - Properties - UI
     
     @IBOutlet private weak var _collectionView: UICollectionView!
     
     // MARK: - Constants
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let MoveToPhotoSvgOverlaySegueID = "MoveToPhotoSvgOverlay"
+    }
     
     private enum Layout {
         static let numberOfCellsInARow: CGFloat = 3.0
@@ -48,6 +53,20 @@ extension AlbumPhotosViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+}
+
+// MARK: - Navigation
+
+extension AlbumPhotosViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.MoveToPhotoSvgOverlaySegueID, let overlayView = segue.destination as? PhotoSvgOverlayViewProtocol, let photo = sender as? Album.Photo {
+            // mvvm creation
+            let viewModel = PhotoSvgOverlayViewModel()
+            viewModel.overlayView = overlayView
+            viewModel.photo = photo
+            overlayView.photoSvgOverlayViewModel = viewModel
+        }
     }
 }
 
@@ -85,11 +104,6 @@ extension AlbumPhotosViewController: AlbumPhotosViewProtocol {
     }
 }
 
-// MARK: - AlbumsViewProtocol
-
-extension AlbumPhotosViewController: AlbumsViewProtocol {
-}
-
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
 extension AlbumPhotosViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -114,6 +128,7 @@ extension AlbumPhotosViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Log.l(l: .i)
+        let item = _list[indexPath.row]
+        performSegue(withIdentifier: Constants.MoveToPhotoSvgOverlaySegueID, sender: item)
     }
 }

@@ -12,7 +12,6 @@ class AlbumsViewController: UIViewController {
     // MARK: - MVVM
     
     var albumsViewModel: AlbumsViewModelProtocol?
-    var albumPhotosViewModel: AlbumPhotosViewModelProtocol?
     
     // MARK: - Properties - UI
     
@@ -53,16 +52,9 @@ extension AlbumsViewController {
 
 extension AlbumsViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.moveToAlbumPhotosSegueID,
-            let albumDetail = segue.destination as? AlbumsViewProtocol & AlbumPhotosViewProtocol,
-            let album = sender as? Albums.Album {
-            // mvvm - for album
-            albumDetail.albumsViewModel = albumsViewModel
-            self.albumsViewModel?.albumPhotosView = albumDetail
-            
-            // mvvm - for album photo list
+        if segue.identifier == Constants.moveToAlbumPhotosSegueID, let albumDetail = segue.destination as? AlbumPhotosViewProtocol, let album = sender as? Albums.Album {
+            // mvvm creation 
             let viewModel = AlbumPhotosViewModel()
-            viewModel.albumsView = self
             viewModel.albumPhotosView = albumDetail
             viewModel.album = album
             albumDetail.albumPhotosViewModel = viewModel
@@ -117,11 +109,6 @@ extension AlbumsViewController: AlbumsViewProtocol {
         })
         present(alert, animated: true, completion: nil)
     }
-}
-
-// MARK: - AlbumPhotosViewProtocol
-
-extension AlbumsViewController: AlbumPhotosViewProtocol {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
