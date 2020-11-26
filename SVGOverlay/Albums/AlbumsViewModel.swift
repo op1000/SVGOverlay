@@ -82,25 +82,31 @@ extension AlbumsViewModel {
     private func _configureAlbumList() {
         var userAlbumList: [Albums.Album] = []
         
-        guard let userAlbums = _userAlbums else {
-            return
-        }
-        // add all photos
-        do {
-            let options = PHFetchOptions()
-            options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-            let assetsFetchResults = PHAsset.fetchAssets(with: options)
-            if let firstPhoto = assetsFetchResults.firstObject {
-                let uiAlbum = Albums.Album(title: NSLocalizedString("All Photos", comment: ""))
-                userAlbumList.append(uiAlbum)
-                _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
-                    uiAlbum.thumbnail.value = image
-                }
+        _configureAllPhotosAlbum(&userAlbumList)
+        _configureUserAlbums(&userAlbumList)
+        _configureSmartAlbums(&userAlbumList)
+        
+        self.userAlbumList.value = userAlbumList
+    }
+    
+    private func _configureAllPhotosAlbum(_ container: inout [Albums.Album]) {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        let assetsFetchResults = PHAsset.fetchAssets(with: options)
+        if let firstPhoto = assetsFetchResults.firstObject {
+            let uiAlbum = Albums.Album(title: NSLocalizedString("All Photos", comment: ""))
+            container.append(uiAlbum)
+            _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
+                uiAlbum.thumbnail.value = image
             }
         }
-        
-        // add user ablums
-        for index in 0..<(userAlbums.count - 1) {
+    }
+    
+    private func _configureUserAlbums(_ container: inout [Albums.Album]) {
+        guard let userAlbums = _userAlbums, userAlbums.isEmpty == false else {
+            return
+        }
+        for index in 0..<userAlbums.count {
             let album = userAlbums[index]
             guard let title = album.localizedTitle else {
                 continue
@@ -111,17 +117,19 @@ extension AlbumsViewModel {
             let assetsFetchResults = PHAsset.fetchAssets(in: album, options: options)
             if let firstPhoto = assetsFetchResults.firstObject {
                 let uiAlbum = Albums.Album(title: title)
-                userAlbumList.append(uiAlbum)
+                container.append(uiAlbum)
                 _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
                     uiAlbum.thumbnail.value = image
                 }
             }
         }
-        guard let smartAlbums = _smartAlbums else {
+    }
+    
+    private func _configureSmartAlbums(_ container: inout [Albums.Album]) {
+        guard let smartAlbums = _smartAlbums, smartAlbums.isEmpty == false else {
             return
         }
-        // add smart albums
-        for index in 0..<(smartAlbums.count - 1) {
+        for index in 0..<smartAlbums.count {
             let album = smartAlbums[index]
             guard let title = album.localizedTitle else {
                 continue
@@ -132,13 +140,12 @@ extension AlbumsViewModel {
             let assetsFetchResults = PHAsset.fetchAssets(in: album, options: options)
             if let firstPhoto = assetsFetchResults.firstObject {
                 let uiAlbum = Albums.Album(title: title)
-                userAlbumList.append(uiAlbum)
+                container.append(uiAlbum)
                 _imageManager.requestImage(for: firstPhoto, targetSize: Albums.Layout.thumbnailSize, contentMode: .aspectFill, options: _requestOptions) { image, _ in
                     uiAlbum.thumbnail.value = image
                 }
             }
         }
-        self.userAlbumList.value = userAlbumList
     }
 }
 

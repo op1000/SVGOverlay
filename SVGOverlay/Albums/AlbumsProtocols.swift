@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AlbumsViewModelProtocol {
+protocol AlbumsViewModelProtocol: class {
     /// views
     var albumsView: AlbumsViewProtocol? { get set }
     var albumsPhotosView: AlbumsViewProtocol? { get set }
@@ -22,6 +22,7 @@ protocol AlbumsViewModelProtocol {
 protocol AlbumsViewProtocol: class {
     /// view model
     var albumsViewModel: AlbumsViewModelProtocol? { get set }
+    var cellData: Albums.Album? { get set }
     
     /// logic
     func configure()
@@ -30,6 +31,16 @@ protocol AlbumsViewProtocol: class {
 
 // optionls
 extension AlbumsViewProtocol {
+    var cellData: Albums.Album? {
+        get {
+            return Albums.Album(title: "")
+        }
+        // swiftlint:disable unused_setter_value
+        set {
+            // do nothing
+        }
+        // swiftlint:enable unused_setter_value
+    }
     func configure() {}
     func showNoAccessAlert() {}
 }

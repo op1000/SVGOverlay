@@ -16,17 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // do nothing for iOS 13
         } else {
             let storyboard = UIStoryboard(name: "SVGOverlay", bundle: nil)
-            let rootView = storyboard.instantiateViewController(withIdentifier: "AlbumsViewController") as? AlbumsViewController
-            rootView?.view.backgroundColor = .white
+            let navigaion = storyboard.instantiateViewController(withIdentifier: "AlbumsNavigationController") as? UINavigationController
+            guard let rootView = navigaion?.viewControllers.first as? AlbumsViewController else {
+                return true
+            }
             
             // mvvm
             let viewModel = AlbumsViewModel()
             viewModel.albumsView = rootView
-            rootView?.albumsViewModel = viewModel
+            rootView.albumsViewModel = viewModel
             
             // show
             self.window = UIWindow()
-            self.window?.rootViewController = rootView
+            self.window?.rootViewController = navigaion
             self.window?.makeKeyAndVisible()
         }
         return true

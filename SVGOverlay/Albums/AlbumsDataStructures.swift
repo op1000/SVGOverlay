@@ -5,8 +5,9 @@
 //  Created by Nakcheon Jung on 2020/11/25.
 //
 
-import Foundation
 import UIKit
+
+// swiftlint:disable convenience_type
 
 struct Albums {
     struct Album {
@@ -19,6 +20,8 @@ struct Albums {
     }
     
     enum Layout {
-        static let thumbnailSize = CGSize(width: 64.0, height: 64.0)
+        static let thumbnailSize = CGSize(width: 64.0 * UIScreen.main.scale, height: 64.0 * UIScreen.main.scale)
     }
 }
+
+// swiftlint:enable convenience_type
