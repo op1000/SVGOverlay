@@ -19,8 +19,6 @@ class AlbumPhotosViewController: UIViewController {
     
     // MARK: - Constants
     
-    // MARK: - Constants
-    
     private enum Constants {
         static let MoveToPhotoSvgOverlaySegueID = "MoveToPhotoSvgOverlay"
     }
@@ -67,6 +65,21 @@ extension AlbumPhotosViewController {
             viewModel.photo = photo
             overlayView.photoSvgOverlayViewModel = viewModel
         }
+    }
+    
+    override func canPerformUnwindSegueAction(_ action: Selector, from fromViewController: UIViewController, withSender sender: Any) -> Bool {
+        Log.l(l: .i)
+        if !super.canPerformAction(action, withSender: self) {
+            return false
+        }
+        if fromViewController.isEqual(self) {
+            return false
+        }
+        return true
+    }
+    
+    @IBAction private func prepareForUnwindToAlbumPhotosView(_ segue: UIStoryboardSegue) {
+        Log.l(l: .i)
     }
 }
 

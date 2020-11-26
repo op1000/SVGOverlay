@@ -4,4 +4,5 @@ use_frameworks!
 
 target 'SVGOverlay' do
   pod 'SwiftLint'
+  pod 'SnapKit'
 end

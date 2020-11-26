@@ -255,9 +255,11 @@
                         <outlet property="_originalPhotoImageView" destination="G3M-Zz-jAK" id="Mea-zb-Cce"/>
                         <outlet property="_overlayIconImageView" destination="o4F-bh-SIi" id="Jzs-cV-Gk3"/>
                         <outlet property="_overlayView" destination="MbB-Hk-yUa" id="Yb6-YB-jQx"/>
+                        <segue destination="k6s-cl-zf4" kind="unwind" identifier="UnwindToAlbumPhotos" unwindAction="prepareForUnwindToAlbumPhotosView:" id="wMA-x0-Sbi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IdL-j1-hKZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="k6s-cl-zf4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3210.144927536232" y="137.94642857142856"/>
         </scene>

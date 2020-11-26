@@ -19,9 +19,23 @@ class PhotoSvgOverlayViewController: UIViewController {
     @IBOutlet private weak var _overlayIconImageView: UIImageView!
     @IBOutlet private weak var _originalPhotoImageView: UIImageView!
     
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let UnwindToAlbumPhotosSegueID = "UnwindToAlbumPhotos"
+    }
+    
     // MARK: - Properties - private
     
     private var _list: [PhotoSvg.Overlay] = []
+    
+    // MARK: - Properties - factory
+    
+    private lazy var _navigaionFactory: PhotoSvgOverlayNavigationFactory = {
+        let navigaionFactory = PhotoSvgOverlayNavigationFactory()
+        navigaionFactory.view = self
+        return navigaionFactory
+    }()
     
     // MARK: - life cycle
     
@@ -53,6 +67,7 @@ extension PhotoSvgOverlayViewController {
     }
     
     private func _initializeUi() {
+        _configureNavigaionBar()
     }
     
     private func _bindDatas() {
@@ -69,6 +84,18 @@ extension PhotoSvgOverlayViewController {
             self._collectionView.reloadData()
         }
     }
+    
+    private func _configureNavigaionBar() {
+        title = nil
+        navigationItem.leftBarButtonItems = _navigaionFactory.leftBarButtonItems
+        navigationItem.rightBarButtonItems = _navigaionFactory.rightBarButtonItems
+    }
+    
+    private func _processOverlayIconSelected(_ overlay: PhotoSvg.Overlay) {
+        _overlayIconImageView.image = overlay.icon.value
+        _overlayIconImageView.isHidden = false
+        _configureNavigaionBar()
+    }
 }
 
 // MARK: - PhotoSvgOverlayViewProtocol
@@ -81,6 +108,27 @@ extension PhotoSvgOverlayViewController: PhotoSvgOverlayViewProtocol {
     
     func originalPhotoImageViewSize() -> CGSize {
         return _originalPhotoImageView.frame.size
+    }
+}
+
+// MARK: - PhotoSvgOverlayNavigationFactoryReveiverProtocol
+
+extension PhotoSvgOverlayViewController: PhotoSvgOverlayNavigationFactoryReveiverProtocol {
+    func actionCloseButtonPressed(_ sender: UIButton) {
+        Log.l(l: .i)
+        performSegue(withIdentifier: Constants.UnwindToAlbumPhotosSegueID, sender: nil)
+    }
+    
+    func actionOverlayButtonPressed(_ sender: UIButton) {
+        Log.l(l: .i)
+    }
+    
+    func currentUserInterfaceStyle() -> UIUserInterfaceStyle {
+        return traitCollection.userInterfaceStyle
+    }
+    
+    func isOverlayIconVisible() -> Bool {
+        return _overlayIconImageView.isHidden == false
     }
 }
 
@@ -108,7 +156,6 @@ extension PhotoSvgOverlayViewController: UICollectionViewDataSource, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = _list[indexPath.row]
-        _overlayIconImageView.image = item.icon.value
-        _overlayIconImageView.isHidden = false
+        _processOverlayIconSelected(item)
     }
 }

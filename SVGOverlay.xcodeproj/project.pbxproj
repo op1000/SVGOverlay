@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,11 @@
 		0B12B64A256FA94E00AEE9C7 /* PhotoSvgOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B649256FA94E00AEE9C7 /* PhotoSvgOverlayViewModel.swift */; };
 		0B12B64D256FA95B00AEE9C7 /* PhotoSvgOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B64C256FA95B00AEE9C7 /* PhotoSvgOverlayViewController.swift */; };
 		0B12B654256FB0F700AEE9C7 /* OverlayIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B653256FB0F700AEE9C7 /* OverlayIconCollectionViewCell.swift */; };
+		0B12B696256FCB9E00AEE9C7 /* NavigationFactoryDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B695256FCB9E00AEE9C7 /* NavigationFactoryDataStructures.swift */; };
+		0B12B699256FCC0500AEE9C7 /* NavigationFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B698256FCC0500AEE9C7 /* NavigationFactoryProtocols.swift */; };
+		0B12B69E256FCC7100AEE9C7 /* PhotoSvgOverlayNavigationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B69D256FCC7100AEE9C7 /* PhotoSvgOverlayNavigationFactory.swift */; };
+		0B12B6A1256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B6A0256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift */; };
+		0B12B6AB256FD0DB00AEE9C7 /* UIImage+Convenient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B6AA256FD0DB00AEE9C7 /* UIImage+Convenient.swift */; };
 		0B38E256256E0E1600ED8AB2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */; };
 		0BF728C3256DF9E7001CDD78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF728C2256DF9E7001CDD78 /* AppDelegate.swift */; };
 		0BF728C5256DF9E7001CDD78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF728C4256DF9E7001CDD78 /* SceneDelegate.swift */; };
@@ -56,6 +61,11 @@
 		0B12B649256FA94E00AEE9C7 /* PhotoSvgOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSvgOverlayViewModel.swift; sourceTree = "<group>"; };
 		0B12B64C256FA95B00AEE9C7 /* PhotoSvgOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSvgOverlayViewController.swift; sourceTree = "<group>"; };
 		0B12B653256FB0F700AEE9C7 /* OverlayIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		0B12B695256FCB9E00AEE9C7 /* NavigationFactoryDataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFactoryDataStructures.swift; sourceTree = "<group>"; };
+		0B12B698256FCC0500AEE9C7 /* NavigationFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFactoryProtocols.swift; sourceTree = "<group>"; };
+		0B12B69D256FCC7100AEE9C7 /* PhotoSvgOverlayNavigationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSvgOverlayNavigationFactory.swift; sourceTree = "<group>"; };
+		0B12B6A0256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSvgOverlayNavigationFactoryProtocols.swift; sourceTree = "<group>"; };
+		0B12B6AA256FD0DB00AEE9C7 /* UIImage+Convenient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Convenient.swift"; sourceTree = "<group>"; };
 		0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		0B38E25A256E12D900ED8AB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = SVGOverlay/Info.plist; sourceTree = SOURCE_ROOT; };
 		0BF728BF256DF9E7001CDD78 /* SVGOverlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SVGOverlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +108,7 @@
 				0B12B626256F466D00AEE9C7 /* TableView+Cell.swift */,
 				0B12B63E256F5B5400AEE9C7 /* CollectionView+Cell.swift */,
 				0B12B62A256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift */,
+				0B12B6AA256FD0DB00AEE9C7 /* UIImage+Convenient.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -124,6 +135,41 @@
 				0B12B653256FB0F700AEE9C7 /* OverlayIconCollectionViewCell.swift */,
 			);
 			path = SvgOverlay;
+			sourceTree = "<group>";
+		};
+		0B12B693256FCA7F00AEE9C7 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0B12B694256FCADA00AEE9C7 /* Navigation */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		0B12B694256FCADA00AEE9C7 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0B12B695256FCB9E00AEE9C7 /* NavigationFactoryDataStructures.swift */,
+				0B12B698256FCC0500AEE9C7 /* NavigationFactoryProtocols.swift */,
+				0B12B69B256FCC2200AEE9C7 /* Factories */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		0B12B69B256FCC2200AEE9C7 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				0B12B69C256FCC2C00AEE9C7 /* PhotoSvgOverlay */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		0B12B69C256FCC2C00AEE9C7 /* PhotoSvgOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				0B12B6A0256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift */,
+				0B12B69D256FCC7100AEE9C7 /* PhotoSvgOverlayNavigationFactory.swift */,
+			);
+			path = PhotoSvgOverlay;
 			sourceTree = "<group>";
 		};
 		0B38E254256E0DF700ED8AB2 /* Supporting Files */ = {
@@ -190,6 +236,7 @@
 				0B12B62D256F53B800AEE9C7 /* AlbumPhotos */,
 				0B38E261256E132700ED8AB2 /* Albums */,
 				0B38E25F256E131400ED8AB2 /* Storyboards */,
+				0B12B693256FCA7F00AEE9C7 /* UIKit */,
 				0B12B619256E7B2700AEE9C7 /* FoundationKit */,
 				0B38E25E256E12FF00ED8AB2 /* Resources */,
 				0BF728C2256DF9E7001CDD78 /* AppDelegate.swift */,
@@ -227,6 +274,7 @@
 				0BF728BB256DF9E7001CDD78 /* Sources */,
 				0BF728BC256DF9E7001CDD78 /* Frameworks */,
 				0BF728BD256DF9E7001CDD78 /* Resources */,
+				49B2A098FB1CE5F7E4D6CDDA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,6 +350,23 @@
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --config .swiftlint.yml\n";
 		};
+		49B2A098FB1CE5F7E4D6CDDA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SVGOverlay/Pods-SVGOverlay-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SVGOverlay/Pods-SVGOverlay-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SVGOverlay/Pods-SVGOverlay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		82D4311556544C11787B5D19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -339,6 +404,8 @@
 				0B12B63F256F5B5400AEE9C7 /* CollectionView+Cell.swift in Sources */,
 				0B12B61F256E9B3500AEE9C7 /* Binder.swift in Sources */,
 				0B12B617256E793400AEE9C7 /* AlbumsViewModel.swift in Sources */,
+				0B12B699256FCC0500AEE9C7 /* NavigationFactoryProtocols.swift in Sources */,
+				0B12B6A1256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift in Sources */,
 				0B12B62B256F4D8600AEE9C7 /* PHFetchResult+Convenient.swift in Sources */,
 				0B12B62F256F561300AEE9C7 /* AlbumPhotosDataStructures.swift in Sources */,
 				0B12B639256F56B700AEE9C7 /* AlbumPhotosViewController.swift in Sources */,
@@ -346,7 +413,10 @@
 				0B12B636256F56AC00AEE9C7 /* AlbumPhotosViewModel.swift in Sources */,
 				0B12B63C256F570100AEE9C7 /* PhotoCollectionViewCell.swift in Sources */,
 				0B12B627256F466D00AEE9C7 /* TableView+Cell.swift in Sources */,
+				0B12B69E256FCC7100AEE9C7 /* PhotoSvgOverlayNavigationFactory.swift in Sources */,
 				0B12B633256F56A500AEE9C7 /* AlbumPhotosProtocols.swift in Sources */,
+				0B12B696256FCB9E00AEE9C7 /* NavigationFactoryDataStructures.swift in Sources */,
+				0B12B6AB256FD0DB00AEE9C7 /* UIImage+Convenient.swift in Sources */,
 				0B12B622256F40B100AEE9C7 /* AlbumTableViewCell.swift in Sources */,
 				0BF728C3256DF9E7001CDD78 /* AppDelegate.swift in Sources */,
 				0BF728C5256DF9E7001CDD78 /* SceneDelegate.swift in Sources */,
