@@ -255,7 +255,7 @@
                         <outlet property="_originalPhotoImageView" destination="G3M-Zz-jAK" id="Mea-zb-Cce"/>
                         <outlet property="_overlayIconImageView" destination="o4F-bh-SIi" id="Jzs-cV-Gk3"/>
                         <outlet property="_overlayView" destination="MbB-Hk-yUa" id="Yb6-YB-jQx"/>
-                        <segue destination="k6s-cl-zf4" kind="unwind" identifier="UnwindToAlbumPhotos" unwindAction="prepareForUnwindToAlbumPhotosView:" id="wMA-x0-Sbi"/>
+                        <segue destination="k6s-cl-zf4" kind="unwind" identifier="UnwindToParent" unwindAction="prepareForUnwindToParentView:" id="zcD-5a-Isx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IdL-j1-hKZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

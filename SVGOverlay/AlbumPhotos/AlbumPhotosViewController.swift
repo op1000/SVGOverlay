@@ -78,7 +78,7 @@ extension AlbumPhotosViewController {
         return true
     }
     
-    @IBAction private func prepareForUnwindToAlbumPhotosView(_ segue: UIStoryboardSegue) {
+    @IBAction private func prepareForUnwindToParentView(_ segue: UIStoryboardSegue) {
         Log.l(l: .i)
     }
 }
@@ -93,6 +93,9 @@ extension AlbumPhotosViewController {
     
     private func _initializeUi() {
         title = albumPhotosViewModel?.album?.title
+        
+        // enable edge swipe
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     private func _bindDatas() {

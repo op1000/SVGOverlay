@@ -22,12 +22,13 @@ class PhotoSvgOverlayViewController: UIViewController {
     // MARK: - Constants
     
     private enum Constants {
-        static let UnwindToAlbumPhotosSegueID = "UnwindToAlbumPhotos"
+        static let UnwindToParentSegueID = "UnwindToParent"
     }
     
     // MARK: - Properties - private
     
     private var _list: [PhotoSvg.Overlay] = []
+    private var _selectedIcon: PhotoSvg.Overlay?
     
     // MARK: - Properties - factory
     
@@ -89,12 +90,36 @@ extension PhotoSvgOverlayViewController {
         title = nil
         navigationItem.leftBarButtonItems = _navigaionFactory.leftBarButtonItems
         navigationItem.rightBarButtonItems = _navigaionFactory.rightBarButtonItems
+        
+        // enable edge swipe
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     private func _processOverlayIconSelected(_ overlay: PhotoSvg.Overlay) {
         _overlayIconImageView.image = overlay.icon.value
         _overlayIconImageView.isHidden = false
         _configureNavigaionBar()
+    }
+    
+    private func _closeView() {
+        performSegue(withIdentifier: Constants.UnwindToParentSegueID, sender: nil)
+    }
+    
+    private func _calculateIconSizeToDraw() -> CGSize {
+        guard let orgImage = photoSvgOverlayViewModel?.photo?.thumbnail.value else {
+            return CGSize.zero
+        }
+        let orgSize = orgImage.size
+        let ratio = orgSize.height / _originalPhotoImageView.frame.size.height
+        let iconSize = CGSize(width: _overlayIconImageView.frame.size.width * ratio, height: _overlayIconImageView.frame.size.height * ratio)
+        Log.l("ratio = \(ratio), iconSize = \(iconSize)")
+        return iconSize
+    }
+    
+    private func _disableOverlay(button: UIButton) {
+        button.isUserInteractionEnabled = false
+        button.isEnabled = false
+        button.backgroundColor = .lightGray
     }
 }
 
@@ -109,6 +134,30 @@ extension PhotoSvgOverlayViewController: PhotoSvgOverlayViewProtocol {
     func originalPhotoImageViewSize() -> CGSize {
         return _originalPhotoImageView.frame.size
     }
+    
+    func showImageSaveErrorAlert(error: Error) {
+        let title = NSLocalizedString("Save error", comment: "")
+        let message = error.localizedDescription
+        let okString = NSLocalizedString("OK", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: okString, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self._closeView()
+        })
+        present(alert, animated: true)
+    }
+    
+    func showImageSavedAlert() {
+        let title = NSLocalizedString("Saved", comment: "")
+        let message = NSLocalizedString("Your altered image has been saved to your photos.", comment: "")
+        let okString = NSLocalizedString("OK", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: okString, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self._closeView()
+        })
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - PhotoSvgOverlayNavigationFactoryReveiverProtocol
@@ -116,11 +165,24 @@ extension PhotoSvgOverlayViewController: PhotoSvgOverlayViewProtocol {
 extension PhotoSvgOverlayViewController: PhotoSvgOverlayNavigationFactoryReveiverProtocol {
     func actionCloseButtonPressed(_ sender: UIButton) {
         Log.l(l: .i)
-        performSegue(withIdentifier: Constants.UnwindToAlbumPhotosSegueID, sender: nil)
+        _closeView()
     }
     
     func actionOverlayButtonPressed(_ sender: UIButton) {
         Log.l(l: .i)
+        guard let selected = _selectedIcon else {
+            return
+        }
+        let iconSize = _calculateIconSizeToDraw()
+        guard iconSize != CGSize.zero else {
+            return
+        }
+        
+        // prevent multiple hit
+        _disableOverlay(button: sender)
+        
+        // draw
+        photoSvgOverlayViewModel?.overlay(icon: selected, iconSize: iconSize)
     }
     
     func currentUserInterfaceStyle() -> UIUserInterfaceStyle {
@@ -156,6 +218,7 @@ extension PhotoSvgOverlayViewController: UICollectionViewDataSource, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = _list[indexPath.row]
+        _selectedIcon = item
         _processOverlayIconSelected(item)
     }
 }

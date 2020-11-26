@@ -115,6 +115,8 @@ extension PhotoSvgOverlayNavigationFactory {
             button.setTitleColor(.white, for: .normal)
             button.backgroundColor = .black
         }
+        button.setTitleColor(.gray, for: .disabled)
+
         return button
     }
     

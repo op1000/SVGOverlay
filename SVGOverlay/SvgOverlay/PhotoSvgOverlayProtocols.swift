@@ -19,6 +19,7 @@ protocol PhotoSvgOverlayViewModelProtocol: class {
     
     /// logic
     func configure()
+    func overlay(icon: PhotoSvg.Overlay, iconSize: CGSize)
 }
 
 protocol PhotoSvgOverlayViewProtocol: class {
@@ -29,6 +30,8 @@ protocol PhotoSvgOverlayViewProtocol: class {
     /// logic
     func configure()
     func originalPhotoImageViewSize() -> CGSize
+    func showImageSaveErrorAlert(error: Error)
+    func showImageSavedAlert()
 }
 
 // optionls
@@ -45,4 +48,6 @@ extension PhotoSvgOverlayViewProtocol {
     }
     func configure() {}
     func originalPhotoImageViewSize() -> CGSize { return CGSize.zero }
+    func showImageSaveErrorAlert(error: Error) {}
+    func showImageSavedAlert() {}
 }

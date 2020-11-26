@@ -36,13 +36,6 @@ class PhotoSvgOverlayViewModel: NSObject {
     
     private let _imageManager = PHCachingImageManager()
     
-    private let _requestOptions: PHImageRequestOptions = {
-        let opt = PHImageRequestOptions()
-        opt.isNetworkAccessAllowed = true
-        opt.resizeMode = .fast
-        return opt
-    }()
-    
     // MARK: - life cycle
     
     override init() {
@@ -62,13 +55,15 @@ extension PhotoSvgOverlayViewModel {
     }
     
     private func _fetchOriginalImage() {
-        guard let photoAsset = photo?.asset, let size = overlayView?.originalPhotoImageViewSize() else {
+        guard let photoAsset = photo?.asset else {
             return
         }
         OperationQueue.main.addOperation { [weak self] in
             guard let self = self else { return }
             
-            self._imageManager.requestImage(for: photoAsset, targetSize: size, contentMode: .aspectFill, options: self._requestOptions) { image, _ in
+            // fetch full size image
+            self._imageManager.requestImage(for: photoAsset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: nil) { image, _ in
+                Log.l("image.size = \(image?.size ?? CGSize.zero)")
                 self.photo?.thumbnail.value = image
             }
         }
@@ -80,5 +75,39 @@ extension PhotoSvgOverlayViewModel {
 extension PhotoSvgOverlayViewModel: PhotoSvgOverlayViewModelProtocol {
     func configure() {
         _fetchOriginalImage()
+    }
+    
+    func overlay(icon: PhotoSvg.Overlay, iconSize: CGSize) {
+        guard let orgImage = photo?.thumbnail.value else {
+            return
+        }
+        guard let topImage = icon.icon.value else {
+            return
+        }
+        let orgSize = orgImage.size
+        
+        UIGraphicsBeginImageContextWithOptions(orgSize, false, 0.0)
+        
+        orgImage.draw(in: CGRect(origin: CGPoint.zero, size: orgSize))
+        let startPoint = CGPoint(x: (orgSize.width - iconSize.width) / 2.0, y: (orgSize.height - iconSize.height) / 2.0)
+        topImage.draw(in: CGRect(origin: startPoint, size: iconSize))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let selector = #selector(self.onImageSaved(_:error:contextInfo:))
+        newImage?.saveToPhotoLibrary(self, selector)
+    }
+}
+
+// MARK: - Actions/Selectors
+
+extension PhotoSvgOverlayViewModel {
+    @objc private func onImageSaved(_ image: UIImage, error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            overlayView?.showImageSaveErrorAlert(error: error)
+        } else {
+            overlayView?.showImageSavedAlert()
+        }
     }
 }

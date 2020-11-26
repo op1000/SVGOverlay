@@ -53,7 +53,7 @@ extension AlbumsViewController {
 extension AlbumsViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.moveToAlbumPhotosSegueID, let albumDetail = segue.destination as? AlbumPhotosViewProtocol, let album = sender as? Albums.Album {
-            // mvvm creation 
+            // mvvm creation
             let viewModel = AlbumPhotosViewModel()
             viewModel.albumPhotosView = albumDetail
             viewModel.album = album
@@ -75,6 +75,9 @@ extension AlbumsViewController {
     
     private func _initializeUi() {
         title = NSLocalizedString("Albums", comment: "")
+        
+        // enable edge swipe
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     private func _bindDatas() {
@@ -86,7 +89,15 @@ extension AlbumsViewController {
             Log.l(l: .i)
             self._list = list
             self._tableView.reloadData()
+            
+            // NOTE: 최초 로딩은 all photos 화면부터 보여준다.
+            self._moveToAllPhotos()
         }
+    }
+    
+    private func _moveToAllPhotos() {
+        let item = _list.first
+        performSegue(withIdentifier: Constants.moveToAlbumPhotosSegueID, sender: item)
     }
 }
 

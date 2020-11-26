@@ -20,4 +20,10 @@ extension UIImage {
             return nil
         }
     }
+    
+    func saveToPhotoLibrary(_ completionTarget: Any?, _ completionSelector: Selector?) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            UIImageWriteToSavedPhotosAlbum(self, completionTarget, completionSelector, nil)
+        }
+    }
 }
