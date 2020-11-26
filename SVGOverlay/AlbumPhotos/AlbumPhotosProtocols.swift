@@ -20,6 +20,7 @@ protocol AlbumPhotosViewModelProtocol: class {
     
     /// logic
     func configure()
+    func stopRequestImages()
 }
 
 protocol AlbumPhotosViewProtocol: class {

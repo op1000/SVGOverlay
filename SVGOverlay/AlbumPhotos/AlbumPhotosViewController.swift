@@ -145,6 +145,7 @@ extension AlbumPhotosViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = _list[indexPath.row]
+        albumPhotosViewModel?.stopRequestImages()
         performSegue(withIdentifier: Constants.MoveToPhotoSvgOverlaySegueID, sender: item)
     }
 }

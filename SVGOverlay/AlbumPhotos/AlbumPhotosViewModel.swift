@@ -51,6 +51,7 @@ class AlbumPhotosViewModel: NSObject {
 
 extension AlbumPhotosViewModel {
     private func _configurePhotosList() {
+        stopRequestImages()
         var photoList: [Album.Photo] = []
         let assetsFetchResults: PHFetchResult<PHAsset>
         if let album = album?.asset {
@@ -87,6 +88,10 @@ extension AlbumPhotosViewModel: AlbumPhotosViewModelProtocol {
             guard let self = self else { return }
             self._configurePhotosList()
         }
+    }
+    
+    func stopRequestImages() {
+        OperationQueue.main.cancelAllOperations()
     }
 }
 
