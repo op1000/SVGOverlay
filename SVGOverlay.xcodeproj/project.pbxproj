@@ -70,6 +70,7 @@
 		0B12B6AA256FD0DB00AEE9C7 /* UIImage+Convenient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Convenient.swift"; sourceTree = "<group>"; };
 		0B12B6AD256FE1EF00AEE9C7 /* UIView+Convenient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Convenient.swift"; sourceTree = "<group>"; };
 		0B12B6B02570978600AEE9C7 /* ImageExportSizeChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExportSizeChangeViewController.swift; sourceTree = "<group>"; };
+		0B12B6B52570B0BD00AEE9C7 /* readme */ = {isa = PBXFileReference; lastKnownFileType = text; path = readme; sourceTree = SOURCE_ROOT; };
 		0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		0B38E25A256E12D900ED8AB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = SVGOverlay/Info.plist; sourceTree = SOURCE_ROOT; };
 		0BF728BF256DF9E7001CDD78 /* SVGOverlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SVGOverlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +182,7 @@
 		0B38E254256E0DF700ED8AB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0B12B6B52570B0BD00AEE9C7 /* readme */,
 				0B38E25A256E12D900ED8AB2 /* Info.plist */,
 				0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */,
 			);
