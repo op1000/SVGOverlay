@@ -16,6 +16,7 @@ class AlbumPhotosViewController: UIViewController {
     // MARK: - Properties - UI
     
     @IBOutlet private weak var _collectionView: UICollectionView!
+    @IBOutlet private weak var _collectionViewFlowLayout: UICollectionViewFlowLayout!
     
     // MARK: - Constants
     
@@ -92,10 +93,9 @@ extension AlbumPhotosViewController {
     }
     
     private func _initializeUi() {
-        title = albumPhotosViewModel?.album?.title
-        
-        // enable edge swipe
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        _configureTitle()
+        _configureNavigaionBar()
+        _configureCollectionView()
     }
     
     private func _bindDatas() {
@@ -108,6 +108,20 @@ extension AlbumPhotosViewController {
             self._list = list
             self._collectionView.reloadData()
         }
+    }
+    
+    private func _configureCollectionView() {
+        let width: CGFloat = floor((view.bounds.size.width - (Layout.sideMargin * 2) - (Layout.interCellMargin * (Layout.numberOfCellsInARow - 1))) / Layout.numberOfCellsInARow)
+        _collectionViewFlowLayout.itemSize = CGSize(width: width, height: width)
+    }
+    
+    private func _configureTitle() {
+        title = albumPhotosViewModel?.album?.title
+    }
+    
+    private func _configureNavigaionBar() {
+        // enable edge swipe
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 }
 
@@ -136,11 +150,6 @@ extension AlbumPhotosViewController: UICollectionViewDataSource, UICollectionVie
         cell.cellData = _list[indexPath.row]
         cell.configure()
         return cell
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = (view.bounds.size.width - (Layout.sideMargin * 2) - (Layout.interCellMargin * (Layout.numberOfCellsInARow - 1))) / Layout.numberOfCellsInARow
-        return CGSize(width: width, height: width)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

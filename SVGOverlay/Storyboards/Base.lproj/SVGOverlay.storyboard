@@ -143,6 +143,7 @@
                     <navigationItem key="navigationItem" id="Xkc-nI-XZh"/>
                     <connections>
                         <outlet property="_collectionView" destination="IsJ-ul-PX5" id="L5J-AO-Nw1"/>
+                        <outlet property="_collectionViewFlowLayout" destination="Hwb-kj-njy" id="xRA-gY-YQB"/>
                         <segue destination="zqV-em-maP" kind="show" identifier="MoveToPhotoSvgOverlay" id="F3R-yX-Ee5"/>
                     </connections>
                 </viewController>
