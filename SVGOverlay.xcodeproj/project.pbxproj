@@ -32,6 +32,7 @@
 		0B12B6A1256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B6A0256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift */; };
 		0B12B6AB256FD0DB00AEE9C7 /* UIImage+Convenient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B6AA256FD0DB00AEE9C7 /* UIImage+Convenient.swift */; };
 		0B12B6AE256FE1EF00AEE9C7 /* UIView+Convenient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B6AD256FE1EF00AEE9C7 /* UIView+Convenient.swift */; };
+		0B12B6B12570978600AEE9C7 /* ImageExportSizeChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12B6B02570978600AEE9C7 /* ImageExportSizeChangeViewController.swift */; };
 		0B38E256256E0E1600ED8AB2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */; };
 		0BF728C3256DF9E7001CDD78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF728C2256DF9E7001CDD78 /* AppDelegate.swift */; };
 		0BF728C5256DF9E7001CDD78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF728C4256DF9E7001CDD78 /* SceneDelegate.swift */; };
@@ -68,6 +69,7 @@
 		0B12B6A0256FCC8300AEE9C7 /* PhotoSvgOverlayNavigationFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSvgOverlayNavigationFactoryProtocols.swift; sourceTree = "<group>"; };
 		0B12B6AA256FD0DB00AEE9C7 /* UIImage+Convenient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Convenient.swift"; sourceTree = "<group>"; };
 		0B12B6AD256FE1EF00AEE9C7 /* UIView+Convenient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Convenient.swift"; sourceTree = "<group>"; };
+		0B12B6B02570978600AEE9C7 /* ImageExportSizeChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExportSizeChangeViewController.swift; sourceTree = "<group>"; };
 		0B38E255256E0E1600ED8AB2 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		0B38E25A256E12D900ED8AB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = SVGOverlay/Info.plist; sourceTree = SOURCE_ROOT; };
 		0BF728BF256DF9E7001CDD78 /* SVGOverlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SVGOverlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +137,7 @@
 				0B12B646256FA93D00AEE9C7 /* PhotoSvgOverlayProtocols.swift */,
 				0B12B649256FA94E00AEE9C7 /* PhotoSvgOverlayViewModel.swift */,
 				0B12B64C256FA95B00AEE9C7 /* PhotoSvgOverlayViewController.swift */,
+				0B12B6B02570978600AEE9C7 /* ImageExportSizeChangeViewController.swift */,
 				0B12B653256FB0F700AEE9C7 /* OverlayIconCollectionViewCell.swift */,
 			);
 			path = SvgOverlay;
@@ -418,6 +421,7 @@
 				0B12B63C256F570100AEE9C7 /* PhotoCollectionViewCell.swift in Sources */,
 				0B12B627256F466D00AEE9C7 /* TableView+Cell.swift in Sources */,
 				0B12B69E256FCC7100AEE9C7 /* PhotoSvgOverlayNavigationFactory.swift in Sources */,
+				0B12B6B12570978600AEE9C7 /* ImageExportSizeChangeViewController.swift in Sources */,
 				0B12B633256F56A500AEE9C7 /* AlbumPhotosProtocols.swift in Sources */,
 				0B12B696256FCB9E00AEE9C7 /* NavigationFactoryDataStructures.swift in Sources */,
 				0B12B6AB256FD0DB00AEE9C7 /* UIImage+Convenient.swift in Sources */,

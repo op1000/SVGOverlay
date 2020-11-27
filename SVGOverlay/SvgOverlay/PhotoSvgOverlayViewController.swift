@@ -18,11 +18,14 @@ class PhotoSvgOverlayViewController: UIViewController {
     @IBOutlet private weak var _overlayView: UIView!
     @IBOutlet private weak var _overlayIconImageView: UIImageView!
     @IBOutlet private weak var _originalPhotoImageView: UIImageView!
+    @IBOutlet private weak var _imageExportSizeChangeViewContainer: UIView!
+    private weak var _imageExportSizeChangeView: PhotoSvgOverlayViewProtocol?
     
     // MARK: - Constants
     
     private enum Constants {
         static let UnwindToParentSegueID = "UnwindToParent"
+        static let EmbedSizeSlierSegueID = "EmbedSizeSlier"
     }
     
     // MARK: - Properties - private
@@ -56,6 +59,20 @@ extension PhotoSvgOverlayViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+}
+
+// MARK: - Navigation
+
+extension PhotoSvgOverlayViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.EmbedSizeSlierSegueID, let exportSizeChangeView = segue.destination as? PhotoSvgOverlayViewProtocol {
+            // mvvm creation
+            let viewModel = photoSvgOverlayViewModel
+            viewModel?.exportSizeChangeView = exportSizeChangeView
+            exportSizeChangeView.photoSvgOverlayViewModel = viewModel
+            _imageExportSizeChangeView = exportSizeChangeView
+        }
     }
 }
 
@@ -121,6 +138,37 @@ extension PhotoSvgOverlayViewController {
         button.isEnabled = false
         button.backgroundColor = .lightGray
     }
+    
+    private func _resetOverlay() {
+        _selectedIcon = nil
+        _overlayIconImageView.image = nil
+        _overlayIconImageView.isHidden = true
+        _configureNavigaionBar()
+    }
+    
+    private func _showExportImageAlert(image: UIImage) {
+        let title = NSLocalizedString("Overlaid", comment: "")
+        let message = "\(NSLocalizedString("Your overlaid image size is", comment: ""))\n\(Int(image.size.width)) x \(Int(image.size.height)).\nExport to Photo library?"
+        let okString = NSLocalizedString("OK", comment: "")
+        let changeResolutionString = NSLocalizedString("Change size", comment: "")
+        let noString = NSLocalizedString("Cancel", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: okString, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.photoSvgOverlayViewModel?.saveImagePhotoLibrary(image: image)
+        })
+        alert.addAction(UIAlertAction(title: changeResolutionString, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            Log.l(l: .i)
+            self._imageExportSizeChangeViewContainer.isHidden = false
+            self._imageExportSizeChangeView?.configure()
+        })
+        alert.addAction(UIAlertAction(title: noString, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self._resetOverlay()
+        })
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - PhotoSvgOverlayViewProtocol
@@ -149,7 +197,7 @@ extension PhotoSvgOverlayViewController: PhotoSvgOverlayViewProtocol {
     
     func showImageSavedAlert() {
         let title = NSLocalizedString("Saved", comment: "")
-        let message = NSLocalizedString("Your altered image has been saved to your photos.", comment: "")
+        let message = NSLocalizedString("Your overlaid image has been saved to your photos.", comment: "")
         let okString = NSLocalizedString("OK", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: okString, style: .default) { [weak self] _ in
@@ -157,6 +205,10 @@ extension PhotoSvgOverlayViewController: PhotoSvgOverlayViewProtocol {
             self._closeView()
         })
         present(alert, animated: true)
+    }
+    
+    func closeSizeChangeView() {
+        _imageExportSizeChangeViewContainer.isHidden = true
     }
 }
 
@@ -182,7 +234,10 @@ extension PhotoSvgOverlayViewController: PhotoSvgOverlayNavigationFactoryReveive
         _disableOverlay(button: sender)
         
         // draw
-        photoSvgOverlayViewModel?.overlay(icon: selected, iconSize: iconSize)
+        photoSvgOverlayViewModel?.overlay(icon: selected, iconSize: iconSize) { [weak self] overlaidImage in
+            guard let self = self else { return }
+            self._showExportImageAlert(image: overlaidImage)
+        }
     }
     
     func currentUserInterfaceStyle() -> UIUserInterfaceStyle {

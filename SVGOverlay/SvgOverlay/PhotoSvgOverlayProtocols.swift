@@ -5,21 +5,27 @@
 //  Created by Nakcheon Jung on 2020/11/26.
 //
 
-import Foundation
+import UIKit
 
 import Photos
 
 protocol PhotoSvgOverlayViewModelProtocol: class {
     /// views
     var overlayView: PhotoSvgOverlayViewProtocol? { get set }
+    var exportSizeChangeView: PhotoSvgOverlayViewProtocol? { get set }
     
     /// data
     var photo: Album.Photo? { get set }
     var icons: Binder<[PhotoSvg.Overlay]> { get }
+    var overlaidImage: UIImage? { get }
     
     /// logic
     func configure()
-    func overlay(icon: PhotoSvg.Overlay, iconSize: CGSize)
+    func overlay(icon: PhotoSvg.Overlay, iconSize: CGSize, completion: @escaping (UIImage) -> Void)
+    func saveImagePhotoLibrary(image: UIImage)
+    func resetOverlay()
+    func resizeOverlaidImage(size: CGSize, completion: @escaping (UIImage) -> Void)
+    func closeSizeChangeView()
 }
 
 protocol PhotoSvgOverlayViewProtocol: class {
@@ -32,6 +38,7 @@ protocol PhotoSvgOverlayViewProtocol: class {
     func originalPhotoImageViewSize() -> CGSize
     func showImageSaveErrorAlert(error: Error)
     func showImageSavedAlert()
+    func closeSizeChangeView()
 }
 
 // optionls
@@ -50,4 +57,5 @@ extension PhotoSvgOverlayViewProtocol {
     func originalPhotoImageViewSize() -> CGSize { return CGSize.zero }
     func showImageSaveErrorAlert(error: Error) {}
     func showImageSavedAlert() {}
+    func closeSizeChangeView() {}
 }

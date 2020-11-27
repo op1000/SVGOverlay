@@ -236,22 +236,33 @@
                                     <outlet property="delegate" destination="zqV-em-maP" id="A6D-03-oZB"/>
                                 </connections>
                             </collectionView>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puu-V1-ndh">
+                                <rect key="frame" x="0.0" y="718" width="414" height="144"/>
+                                <connections>
+                                    <segue destination="H8h-yT-4El" kind="embed" identifier="EmbedSizeSlier" id="qv8-Ir-FlU"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nr1-28-baj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="nr1-28-baj" firstAttribute="trailing" secondItem="HMi-QC-iLy" secondAttribute="trailing" id="17X-oL-fld"/>
                             <constraint firstItem="MbB-Hk-yUa" firstAttribute="top" secondItem="nr1-28-baj" secondAttribute="top" id="6IO-oN-ea1"/>
+                            <constraint firstItem="puu-V1-ndh" firstAttribute="top" secondItem="HMi-QC-iLy" secondAttribute="top" id="6yg-Ne-tYy"/>
+                            <constraint firstItem="puu-V1-ndh" firstAttribute="bottom" secondItem="HMi-QC-iLy" secondAttribute="bottom" id="7Ak-I7-4eu"/>
                             <constraint firstItem="HMi-QC-iLy" firstAttribute="bottom" secondItem="nr1-28-baj" secondAttribute="bottom" id="CgT-5d-mah"/>
+                            <constraint firstItem="puu-V1-ndh" firstAttribute="trailing" secondItem="HMi-QC-iLy" secondAttribute="trailing" id="PIE-dW-bqU"/>
                             <constraint firstItem="nr1-28-baj" firstAttribute="trailing" secondItem="MbB-Hk-yUa" secondAttribute="trailing" id="fGg-iT-dYd"/>
                             <constraint firstItem="MbB-Hk-yUa" firstAttribute="leading" secondItem="nr1-28-baj" secondAttribute="leading" id="fgj-pQ-b5D"/>
                             <constraint firstItem="HMi-QC-iLy" firstAttribute="leading" secondItem="nr1-28-baj" secondAttribute="leading" id="hh0-ys-5eB"/>
                             <constraint firstItem="HMi-QC-iLy" firstAttribute="top" secondItem="MbB-Hk-yUa" secondAttribute="bottom" id="qar-Bo-eFW"/>
+                            <constraint firstItem="puu-V1-ndh" firstAttribute="leading" secondItem="HMi-QC-iLy" secondAttribute="leading" id="yxF-H9-8In"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FW8-FA-hoj"/>
                     <connections>
                         <outlet property="_collectionView" destination="HMi-QC-iLy" id="AQU-uK-nuI"/>
+                        <outlet property="_imageExportSizeChangeViewContainer" destination="puu-V1-ndh" id="Pah-12-19e"/>
                         <outlet property="_originalPhotoImageView" destination="G3M-Zz-jAK" id="Mea-zb-Cce"/>
                         <outlet property="_overlayIconImageView" destination="o4F-bh-SIi" id="Jzs-cV-Gk3"/>
                         <outlet property="_overlayView" destination="MbB-Hk-yUa" id="Yb6-YB-jQx"/>
@@ -280,6 +291,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xqh-Sl-H2Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+        <!--Image Export Size Change View Controller-->
+        <scene sceneID="OA4-yR-KQf">
+            <objects>
+                <viewController storyboardIdentifier="ImageExportSizeChangeViewController" id="H8h-yT-4El" customClass="ImageExportSizeChangeViewController" customModule="SVGOverlay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sBQ-2g-u8i">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="144"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NNN x NNN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmT-A0-FbL">
+                                <rect key="frame" x="20" y="20" width="90.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BY6-lb-Er7">
+                                <rect key="frame" x="348" y="15.5" width="46" height="30"/>
+                                <state key="normal" title="Export"/>
+                                <connections>
+                                    <action selector="exportButtonPressed:" destination="H8h-yT-4El" eventType="touchUpInside" id="KbL-V7-kgG"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Uef-k8-pLo">
+                                <rect key="frame" x="18" y="77" width="378" height="31"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="H8h-yT-4El" eventType="valueChanged" id="JqD-cs-Hfr"/>
+                                </connections>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Uef-k8-pLo" firstAttribute="leading" secondItem="sBQ-2g-u8i" secondAttribute="leading" constant="20" id="0cF-pr-jrh"/>
+                            <constraint firstItem="cmT-A0-FbL" firstAttribute="leading" secondItem="sBQ-2g-u8i" secondAttribute="leading" constant="20" id="5qt-Gc-hHY"/>
+                            <constraint firstItem="BY6-lb-Er7" firstAttribute="centerY" secondItem="cmT-A0-FbL" secondAttribute="centerY" id="SYR-0f-mua"/>
+                            <constraint firstAttribute="trailing" secondItem="BY6-lb-Er7" secondAttribute="trailing" constant="20" id="VWF-QW-fDb"/>
+                            <constraint firstItem="BY6-lb-Er7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cmT-A0-FbL" secondAttribute="trailing" constant="16" id="bVO-CS-yIb"/>
+                            <constraint firstItem="cmT-A0-FbL" firstAttribute="top" secondItem="sBQ-2g-u8i" secondAttribute="top" constant="20" id="tBt-IV-fDq"/>
+                            <constraint firstItem="Uef-k8-pLo" firstAttribute="centerY" secondItem="sBQ-2g-u8i" secondAttribute="centerY" constant="20" id="ycR-da-uE7"/>
+                            <constraint firstAttribute="trailing" secondItem="Uef-k8-pLo" secondAttribute="trailing" constant="20" id="yfE-OI-6gu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_exportButton" destination="BY6-lb-Er7" id="jMY-Fu-UwM"/>
+                        <outlet property="_sizeLabel" destination="cmT-A0-FbL" id="inM-gf-LxG"/>
+                        <outlet property="_sizeSlider" destination="Uef-k8-pLo" id="7nZ-Pd-TuB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gcT-mE-4Vo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4021.739130434783" y="143.30357142857142"/>
         </scene>
     </scenes>
     <resources>

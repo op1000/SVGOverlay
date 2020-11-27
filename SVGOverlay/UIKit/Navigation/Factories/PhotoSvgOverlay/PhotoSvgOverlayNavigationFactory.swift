@@ -73,7 +73,7 @@ extension PhotoSvgOverlayNavigationFactory {
     
     private func _createRightBarButtons() -> [UIButton]? {
         if view?.isOverlayIconVisible() == true {
-            return [_createMoreProductsButton()]
+            return [_createOverlayButton()]
         } else {
             return nil
         }
@@ -98,13 +98,13 @@ extension PhotoSvgOverlayNavigationFactory {
         return button
     }
     
-    private func _createMoreProductsButton() -> UIButton {
+    private func _createOverlayButton() -> UIButton {
         let button = UIButton()
         let titleString = NSLocalizedString("Overlay", comment: "")
         button.setTitle(titleString, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: NavigationFactory.Layout.textButtonLabelFontSize)
         button.addTarget(self, action: #selector(actionOverlayButtonPressed(_:)), for: .touchUpInside)
-        button.snp.makeConstraints(_makeMoreProductsButtonLayout)
+        button.snp.makeConstraints(_makeOverlayButtonLayout)
         button.layer.cornerRadius = NavigationFactory.Layout.textButtonHeight / 2.0
         button.layer.masksToBounds = true
         
@@ -125,7 +125,7 @@ extension PhotoSvgOverlayNavigationFactory {
         make.height.equalTo(NavigationFactory.Layout.buttonWidth)
     }
     
-    private func _makeMoreProductsButtonLayout(_ make: ConstraintMaker) {
+    private func _makeOverlayButtonLayout(_ make: ConstraintMaker) {
         let titleString = NSLocalizedString("Overlay", comment: "")
         let size: CGSize = titleString.size(withAttributes: [.font: UIFont.boldSystemFont(ofSize: NavigationFactory.Layout.titleLabelFontSize)])
         make.width.equalTo(size.width + NavigationFactory.Layout.titleLabelBothSidesMargin)
